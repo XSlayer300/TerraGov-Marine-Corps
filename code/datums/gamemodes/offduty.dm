@@ -30,7 +30,7 @@
 	if(round_finished)
 		return FALSE
 
-/datum/game_mode/offduty/declare_completion()
+/datum/game_mode/offduty/declare_completed()
 	. = ..()
 	to_chat(world, span_round_header("|Round Complete|"))
 	to_chat(world, span_round_body("Thus ends the story of the men and women of the [SSmapping.configs[SHIP_MAP].map_name] and their day-off on [SSmapping.configs[GROUND_MAP].map_name]."))

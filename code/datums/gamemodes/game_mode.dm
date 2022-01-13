@@ -184,8 +184,14 @@
 	//Collects persistence features
 	if(allow_persistence_save)
 		SSpersistence.CollectData()
+	addtimer(CALLBACK(src, .proc/declare_completed), 10 SECONDS)
+	return TRUE
+
+/datum/game_mode/proc/declare_completed()
+	log_game("EORD commenced.")
 	end_of_round_deathmatch()
 	return TRUE
+
 
 
 /datum/game_mode/proc/display_roundstart_logout_report()

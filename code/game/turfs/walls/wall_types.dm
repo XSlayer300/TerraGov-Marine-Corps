@@ -265,7 +265,8 @@
 	opacity = FALSE
 
 /turf/closed/wall/indestructible/splashscreen
-	name = "Space Station 13"
+	name = "TerraGov Marine Corps"
+	desc = "The titlescreen, made by the artists past and present. Aren't you not supposed to see this?"
 	icon = 'icons/misc/title.dmi'
 	icon_state = "title_painting1"
 //	icon_state = "title_holiday"

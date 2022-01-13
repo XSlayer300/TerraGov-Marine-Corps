@@ -228,7 +228,7 @@
 	if(hijack_state != HIJACK_STATE_NORMAL)
 		return
 	cycle_timer = addtimer(CALLBACK(src, .proc/go_to_previous_destination), 20 SECONDS, TIMER_STOPPABLE)
-	priority_announce("Dropship taking off in 20 seconds towards [previous.name]", "Dropship Automatic Departure")
+	priority_announce("Dropship taking off in 20 seconds towards [previous.name].", "Dropship Automatic Interface System")
 
 ///Send the dropship to its previous dock
 /obj/docking_port/mobile/marine_dropship/proc/go_to_previous_destination()
@@ -319,7 +319,7 @@
 /mob/living/carbon/xenomorph/proc/hijack()
 	set category = "Alien"
 	set name = "Hijack Dropship"
-	set desc = "Call down the dropship to the closest LZ or unlock the doors"
+	set desc = "Call down the dropship (the bird) to the closest LZ or unlock the doors if all doors are locked."
 
 	if(!SSticker?.mode)
 		to_chat(src, span_warning("This power doesn't work in this gamemode."))
@@ -333,7 +333,7 @@
 	if(!D.can_summon_dropship(src))
 		return
 
-	to_chat(src, span_warning("You begin calling down the shuttle."))
+	to_chat(src, span_warning("You begin calling down the bird."))
 	if(!do_after(src, 80, FALSE, null, BUSY_ICON_DANGER, BUSY_ICON_DANGER))
 		to_chat(src, span_warning("You stop."))
 		return
@@ -349,7 +349,7 @@
 		return
 
 	hive?.xeno_message("[src] has summoned down the metal bird to [port], gather to her now!")
-	priority_announce("Unknown interference with dropship control. Shutting down autopilot",  "Dropship malfunction")
+	priority_announce("Unknown interference with dropship control. Shutting down autopilot.",  "Dropship Automatic Interface System")
 
 
 #define ALIVE_HUMANS_FOR_CALLDOWN 0.1
@@ -394,9 +394,9 @@
 			return FALSE
 		if(user.do_actions)
 			return FALSE
-		to_chat(user, span_warning("We begin overriding the shuttle lockdown. This will take a while..."))
+		to_chat(user, span_warning("We begin overriding the bird lockdown. This will take a while..."))
 		if(!do_after(user, 30 SECONDS, FALSE, null, BUSY_ICON_DANGER, BUSY_ICON_DANGER))
-			to_chat(user, span_warning("We cease overriding the shuttle lockdown."))
+			to_chat(user, span_warning("We cease overriding the bird lockdown."))
 			return FALSE
 		if(!is_ground_level(D.z))
 			to_chat(user, span_warning("The bird has left meanwhile, try again."))
@@ -405,9 +405,9 @@
 		D.set_hijack_state(HIJACK_STATE_UNLOCKED)
 		D.do_start_hijack_timer(GROUND_LOCKDOWN_TIME)
 		D.silicon_lock_airlocks(TRUE)
-		to_chat(user, span_warning("We have overriden the shuttle lockdown!"))
+		to_chat(user, span_warning("We have overriden the bird lockdown!"))
 		playsound(user, "alien_roar", 50)
-		priority_announce("Alamo lockdown protocol compromised. Interference preventing remote control", "Dropship Lock Alert")
+		priority_announce("Alamo lockdown protocol compromised. Interference preventing remote control.", "Dropship Automatic Interface System")
 		return FALSE
 	if(D.hijack_state == HIJACK_STATE_CALLED_DOWN)
 		to_chat(user, span_warning("The bird's mind is already tampered with!"))
@@ -683,7 +683,7 @@
 		var/confirm = tgui_alert(usr, "Would you like to capture the metal bird?\n THIS WILL END THE ROUND", "Capture the ship?", list( "Yes", "No"))
 		if(confirm != "Yes")
 			return
-		priority_announce("The Alamo has been captured! Losing their main mean of accessing the ground, the marines have no choice but to retreat.", title = "ALAMO CAPTURED")
+		
 		var/datum/game_mode/infestation/infestation_mode = SSticker.mode
 		infestation_mode.round_stage = INFESTATION_DROPSHIP_CAPTURED_XENOS
 		return
@@ -697,7 +697,7 @@
 	crashing_dropship.crashing = TRUE
 	crashing_dropship.unlock_all()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_DROPSHIP_HIJACKED)
-	priority_announce("Unscheduled dropship departure detected from operational area. Hijack likely.", "Dropship Alert", sound = 'sound/AI/hijack.ogg')
+	priority_announce("Unscheduled dropship departure detected from operational area. Hijack likely.", "Dropship Automatic Interface System", sound = 'sound/AI/hijack.ogg')
 	to_chat(user, span_danger("A loud alarm erupts from [src]! The fleshy hosts must know that you can access it!"))
 	user.hive.on_shuttle_hijack(crashing_dropship)
 	playsound(src, 'sound/misc/queen_alarm.ogg')

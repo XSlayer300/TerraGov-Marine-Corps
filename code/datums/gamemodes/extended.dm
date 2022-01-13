@@ -26,16 +26,17 @@
 /datum/game_mode/extended/announce()
 	to_chat(world, "<b>The current game mode is - Extended Role-Playing!</b>")
 	to_chat(world, "<b>Just have fun and role-play!</b>")
+	to_chat(world, span_round_header("The current map is - [SSmapping.configs[GROUND_MAP].map_name]!"))
 
 /datum/game_mode/extended/check_finished()
 	if(!round_finished)
 		return FALSE
 	return TRUE
 
-/datum/game_mode/extended/declare_completion()
+/datum/game_mode/extended/declare_completed()
 	. = ..()
 	to_chat(world, span_round_header("|Round Complete|"))
-	to_chat(world, span_round_body("Thus ends the story of the brave men and women of the [SSmapping.configs[SHIP_MAP].map_name] and their struggle on [SSmapping.configs[GROUND_MAP].map_name]."))
+	to_chat(world, span_round_body("Thus ends the story of the brave men and women of the [SSmapping.configs[SHIP_MAP].map_name] and their adventure on [SSmapping.configs[GROUND_MAP].map_name]."))
 	var/sound/S = sound(pick('sound/theme/neutral_hopeful1.ogg','sound/theme/neutral_hopeful2.ogg'), channel = CHANNEL_CINEMATIC)
 	SEND_SOUND(world, S)
 
@@ -43,3 +44,4 @@
 
 	announce_medal_awards()
 	announce_round_stats()
+	to_chat(world, "")

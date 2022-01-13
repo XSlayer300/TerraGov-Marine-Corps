@@ -813,7 +813,7 @@ to_chat will check for valid clients itself already so no need to double check f
 	if(D?.siloless_hive_timer)
 		return
 
-	xeno_message("We don't have any silos! The hive will collapse if nothing is done", "xenoannounce", 6, TRUE)
+	xeno_message("We don't have any silos! The hive will collapse if nothing is done!", "xenoannounce", 6, TRUE)
 	D.siloless_hive_timer = addtimer(CALLBACK(D, /datum/game_mode.proc/siloless_hive_collapse), 5 MINUTES, TIMER_STOPPABLE)
 
 /**

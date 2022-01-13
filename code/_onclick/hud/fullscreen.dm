@@ -100,6 +100,15 @@
 	icon_state = "blackimageoverlay" //mostly just a black square, you can change this if you get better ideas
 	layer = FULLSCREEN_INTRO_LAYER
 
+/obj/screen/fullscreen/eord
+	icon_state = "black"
+	layer = FULLSCREEN_INTRO_LAYER
+
+/obj/screen/fullscreen/eord/update_for_view(client_view)
+	. = ..()
+	animate(src, alpha = initial(alpha)-255, time = 0, loop = 1)
+	animate(alpha = initial(alpha), time = 10 SECONDS, loop = 1)
+
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
 	layer = FULLSCREEN_DAMAGE_LAYER

@@ -160,31 +160,50 @@ Sensors indicate [numXenosShip || "no"] unknown lifeform signature[numXenosShip 
 		return TRUE
 	return FALSE
 
-/datum/game_mode/infestation/declare_completion()
+/datum/game_mode/infestation/declare_completion() // Thanks to Bravemole for assistance.
 	. = ..()
-	to_chat(world, span_round_header("|[round_finished]|"))
-	to_chat(world, span_round_body("Thus ends the story of the brave men and women of the [SSmapping.configs[SHIP_MAP].map_name] and their struggle on [SSmapping.configs[GROUND_MAP].map_name]."))
 	var/sound/xeno_track
 	var/sound/human_track
 	var/sound/ghost_track
+	for(var/mob/each_mob AS in GLOB.player_list) // If they have EORD on, make a smooth transition fadeout to EORD.
+		if(each_mob.client?.prefs?.be_special & BE_DEATHMATCH && each_mob.stat != DEAD) // If not on or if dead, don't fade it out.
+			each_mob.overlay_fullscreen_timer(10 SECONDS, 30, "roundstart1", /obj/screen/fullscreen/eord)
+
 	switch(round_finished)
 		if(MODE_INFESTATION_X_MAJOR)
+			priority_announce("We lost! We must retreat!", "TGMC High Command")
+			xeno_message(span_xenoannounce("The Queen Mother reaches into your mind from worlds away..."), 3)
+			xeno_message(span_xenoannounce("Great work sisters, we must venture forth to the stars!"), 3)
 			xeno_track = pick('sound/theme/winning_triumph1.ogg', 'sound/theme/winning_triumph2.ogg')
 			human_track = pick('sound/theme/sad_loss1.ogg', 'sound/theme/sad_loss2.ogg')
 			ghost_track = xeno_track
 		if(MODE_INFESTATION_M_MAJOR)
+			priority_announce("We won! For the TGMC!", "TGMC High Command")
+			xeno_message(span_xenoannounce("All connections with the Hivemind have ceased. The sisters are alone. (major)"), 3)
 			xeno_track = pick('sound/theme/sad_loss1.ogg', 'sound/theme/sad_loss2.ogg')
 			human_track = pick('sound/theme/winning_triumph1.ogg', 'sound/theme/winning_triumph2.ogg')
 			ghost_track = human_track
 		if(MODE_INFESTATION_X_MINOR)
+			if(round_stage == INFESTATION_DROPSHIP_CAPTURED_XENOS)
+				priority_announce("We lost the shuttle! What the heck?!", "TGMC High Command")
+				xeno_message(span_xenoannounce("The Queen Mother reaches into your mind from worlds away..."), 3)
+				xeno_message(span_xenoannounce("We have won the conquest! But it won't be for long that they will return..."), 3)
+			if(round_stage == INFESTATION_MARINE_CRASHING)
+				priority_announce("We must cut our losses, head back to base.", "TGMC High Command")
+				xeno_message(span_xenoannounce("The Queen Mother reaches into your mind from worlds away..."), 3)
+				xeno_message(span_xenoannounce("We have won the conquest! But it won't be for long that they will return..."), 3)
 			xeno_track = pick('sound/theme/neutral_hopeful1.ogg', 'sound/theme/neutral_hopeful2.ogg')
 			human_track = pick('sound/theme/neutral_melancholy1.ogg', 'sound/theme/neutral_melancholy2.ogg')
 			ghost_track = xeno_track
 		if(MODE_INFESTATION_M_MINOR)
+			priority_announce("We've won, but there are some remaining, we'll take care of them.", "TGMC High Command")
+			xeno_message(span_xenoannounce("All connections with the Hivemind have ceased. The remaining are alone."), 3)
 			xeno_track = pick('sound/theme/neutral_melancholy1.ogg', 'sound/theme/neutral_melancholy2.ogg')
 			human_track = pick('sound/theme/neutral_hopeful1.ogg', 'sound/theme/neutral_hopeful2.ogg')
 			ghost_track = human_track
 		if(MODE_INFESTATION_DRAW_DEATH)
+			priority_announce("We lost contact with everyone...", "TGMC High Command")
+			xeno_message(span_xenoannounce("All connections with the Hivemind have ceased. The sisters are alone. (draw)"), 3)
 			ghost_track = pick('sound/theme/nuclear_detonation1.ogg', 'sound/theme/nuclear_detonation2.ogg')
 			xeno_track = ghost_track
 			human_track = ghost_track
@@ -215,6 +234,11 @@ Sensors indicate [numXenosShip || "no"] unknown lifeform signature[numXenosShip 
 			continue
 
 		SEND_SOUND(M, ghost_track)
+
+/datum/game_mode/infestation/declare_completed() // The stats displayed proper.
+	. = ..()
+	to_chat(world, span_round_header("|[round_finished]|"))
+	to_chat(world, span_round_body("Thus ends the story of the brave men and women of the [SSmapping.configs[SHIP_MAP].map_name] and their struggle on [SSmapping.configs[GROUND_MAP].map_name]."))
 
 	log_game("[round_finished]\nGame mode: [name]\nRound time: [duration2text()]\nEnd round player population: [length(GLOB.clients)]\nTotal xenos spawned: [GLOB.round_statistics.total_xenos_created]\nTotal humans spawned: [GLOB.round_statistics.total_humans_created]")
 
