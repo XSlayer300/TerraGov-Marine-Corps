@@ -184,6 +184,9 @@
 	//Collects persistence features
 	if(allow_persistence_save)
 		SSpersistence.CollectData()
+	for(var/mob/each_mob AS in GLOB.player_list) /// If they have EORD on, make a smooth transition fadeout to EORD.
+		if(each_mob.client?.prefs?.be_special & BE_DEATHMATCH && each_mob.stat != DEAD) // If not on or if dead, don't fade it out.
+			each_mob.overlay_fullscreen_timer(10 SECONDS, 30, "roundstart1", /obj/screen/fullscreen/eord)
 	addtimer(CALLBACK(src, .proc/declare_completed), 10 SECONDS)
 	return TRUE
 

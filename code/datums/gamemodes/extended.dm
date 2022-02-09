@@ -33,7 +33,12 @@
 		return FALSE
 	return TRUE
 
-/datum/game_mode/extended/declare_completed()
+/datum/game_mode/extended/declare_completion() // Thanks to Bravemole for assistance.
+	. = ..()
+	priority_announce("Alright, enough playing around. Let's get to work.", "TGMC High Command")
+
+
+/datum/game_mode/extended/declare_completed() /// The stats displayed proper.
 	. = ..()
 	to_chat(world, span_round_header("|Round Complete|"))
 	to_chat(world, span_round_body("Thus ends the story of the brave men and women of the [SSmapping.configs[SHIP_MAP].map_name] and their adventure on [SSmapping.configs[GROUND_MAP].map_name]."))
