@@ -128,6 +128,10 @@ GLOBAL_LIST_EMPTY(sensor_towers)
 
 GLOBAL_LIST_EMPTY(unmanned_vehicles)
 
+// PVE Extraction
+GLOBAL_LIST_EMPTY(inventory_boxes)
+GLOBAL_LIST_EMPTY(persistent_inventories)
+
 GLOBAL_LIST_INIT(supply_drops, typecacheof(list(
 	/obj/structure/closet/crate,
 	/obj/structure/largecrate/supply,

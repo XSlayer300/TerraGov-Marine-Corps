@@ -25,7 +25,8 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/storage/LateInitialize()
-	PopulateContents()
+	if(was_stashed == FALSE)
+		PopulateContents()
 
 ///Use this to fill your storage with items. USE THIS INSTEAD OF NEW/INIT
 /obj/item/storage/proc/PopulateContents()

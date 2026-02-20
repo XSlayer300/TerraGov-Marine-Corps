@@ -44,6 +44,9 @@
 	///How long ADS takes (time before firing)
 	var/wield_delay_mod = 0
 
+	// PVE-Extraction
+	unique_save_vars = list("current_rounds")
+
 /obj/item/ammo_magazine/Initialize(mapload, spawn_empty)
 	. = ..()
 	base_icon_state = icon_state
