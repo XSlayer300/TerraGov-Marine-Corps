@@ -9,9 +9,6 @@
 GLOBAL_LIST_INIT(poster_designs, subtypesof(/datum/poster))
 
 //list of all currently accessed stashes. Used to prevent opening multiple stashes and for saving opened stashes on round end
-
-
-GLOBAL_LIST_EMPTY(accessed_stashes)
 GLOBAL_LIST_EMPTY(accessed_stashes)
 
 //////////////////////////

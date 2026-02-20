@@ -1,8 +1,8 @@
 /obj/structure/personal_stash
-	name = "ColMarTech Personal Stash Access Point"
+	name = "\improper NEXUS Automated Equipment Rack MK2"
 	desc = "A jury-rigged ColMarTech vendor which pulls from the mostly-empty bowels of the ship. It can be used to save various objects for use between operations."
-	icon = 'icons/obj/structures/machinery/vending.dmi'
-	icon_state = "prep"
+	icon = 'icons/obj/machines/vending.dmi'
+	icon_state = "marinearmory"
 	density = TRUE
 
 	light_range = 4
@@ -40,10 +40,10 @@
 	stored_items = list
 
 /obj/structure/personal_stash/attack_hand(mob/user)
- 	tgui_interact(user)
+ 	ui_interact(user)
 
 
-/obj/structure/personal_stash/tgui_interact(mob/user, datum/tgui/ui)
+/obj/structure/personal_stash/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ItemStash")
@@ -69,7 +69,7 @@
 			var/ui_index = params["SlotKey"]
 			if(stored_items[ui_index]["item"])
 				stash_remove_item(ui_index)
-				playsound(src.loc, 'sound/handling/click_2.ogg', 10, 1)
+				playsound(src.loc, 'sound/machines/computer_typing1.ogg', 10, 1)
 				return TRUE
 
 			if(usr.get_active_hand())
@@ -94,7 +94,7 @@
 /obj/structure/personal_stash/attackby(obj/item/I, mob/living/user)
 	if(!stash_insert_item(I, user = user))
 		return ..()
-	to_chat(user, SPAN_NOTICE("you stash \the [I.name] into \the [src.name]"))
+	to_chat(user, span_notice("you stash \the [I.name] into \the [src.name]"))
 
 
 /obj/structure/personal_stash/proc/stash_insert_item(obj/item/item, index, mob/user)
@@ -105,7 +105,7 @@
 	if(!index)
 		index = get_free_index()
 		if(!index)
-			to_chat(usr, SPAN_WARNING("No empty slots left in [src.name]"))
+			to_chat(usr, span_warning("No empty slots left in [src.name]!"))
 			return FALSE
 
 	if(user)
@@ -151,7 +151,7 @@
 	unique_id = user.ckey
 
 	if(GLOB.accessed_stashes.Find(unique_id))
-		to_chat(usr, SPAN_WARNING("You already have a stash open!"))
+		to_chat(usr, span_warning("You already have a stash open!"))
 		unique_id = null
 		return
 	GLOB.accessed_stashes += unique_id
@@ -280,7 +280,7 @@
 	var/list/item_entry = list()
 	item_entry["item"] = item.type
 
-	var/atom/control = DuplicateObject(item, FALSE, TRUE) //makes a 'control' item with default vars to compare to, since initial() is too strict
+	var/atom/control = duplicate_object(item, FALSE, TRUE) //makes a 'control' item with default vars to compare to, since initial() is too strict
 
 	var/list/vars2save = list()
 	vars2save = (allowed_vars & item.vars)

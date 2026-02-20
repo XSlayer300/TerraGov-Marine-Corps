@@ -10,11 +10,6 @@
 /atom/proc/get_saveable_contents()
 	return contents
 
-proc/isemptylist(list/list)
-	if(!list.len)
-		return 1
-	return 0
-
 proc/clearlist(list/list)
 	if(istype(list))
 		list.len = 0
@@ -148,7 +143,7 @@ proc/clearlist(list/list)
 
 /proc/full_item_load(var/datum/map_object/MO, loc)
 	if(!ispath(MO.savedtype))
-		error("Undefined save type [MO.savedtype]")
+		log_world("Undefined save type [MO.savedtype]")
 		return
 	var/obj/O = new MO.savedtype (loc)
 	CHECK_TICK
@@ -157,7 +152,7 @@ proc/clearlist(list/list)
 
 	for(var/datum/map_object/MD in MO.contents)
 		if(!ispath(MD.savedtype))
-			error("Undefined save type [MD.savedtype]")
+			log_world("Undefined save type [MD.savedtype]")
 			continue
 
 		var/obj/A = new MD.savedtype (loc)
@@ -169,7 +164,7 @@ proc/clearlist(list/list)
 
 		for(var/datum/map_object/MF in MD.contents)
 			if(!ispath(MF.savedtype))
-				error("Undefined save type [MF.savedtype]")
+				log_world("Undefined save type [MF.savedtype]")
 				continue
 
 			var/obj/B = new MF.savedtype (loc)
@@ -181,7 +176,7 @@ proc/clearlist(list/list)
 
 			for(var/datum/map_object/MG in MF.contents)
 				if(!ispath(MG.savedtype))
-					error("Undefined save type [MG.savedtype]")
+					log_world("Undefined save type [MG.savedtype]")
 					continue
 
 				var/obj/C = new MG.savedtype (loc)
@@ -193,7 +188,7 @@ proc/clearlist(list/list)
 
 				for(var/datum/map_object/ME in MG.contents)
 					if(!ispath(ME.savedtype))
-						error("Undefined save type [ME.savedtype]")
+						log_world("Undefined save type [ME.savedtype]")
 						continue
 
 					var/obj/D = new ME.savedtype (loc)
@@ -205,7 +200,7 @@ proc/clearlist(list/list)
 
 					for(var/datum/map_object/MZ in ME.contents)
 						if(!ispath(MZ.savedtype))
-							error("Undefined save type [MZ.savedtype]")
+							log_world("Undefined save type [MZ.savedtype]")
 							continue
 
 						var/obj/E = new MZ.savedtype (loc)

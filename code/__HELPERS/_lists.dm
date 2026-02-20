@@ -297,10 +297,10 @@
 
 
 //Checks if the list is empty
-/proc/isemptylist(list/L)
-	if(!length(L))
-		return TRUE
-	return FALSE
+proc/isemptylist(list/list)
+	if(!list.len)
+		return 1
+	return 0
 
 
 //Checks for specific types in a list
