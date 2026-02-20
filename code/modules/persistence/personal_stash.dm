@@ -72,8 +72,8 @@
 				playsound(src.loc, 'sound/machines/computer_typing1.ogg', 10, 1)
 				return TRUE
 
-			if(usr.get_active_hand())
-				var/obj/item/I = usr.get_active_hand()
+			if(usr.get_active_held_item())
+				var/obj/item/I = usr.get_active_held_item()
 				stash_insert_item(I, ui_index, usr)
 				return TRUE
 
@@ -179,7 +179,7 @@
 	for(var/key in vars2load)
 
 		if(islist(item_template[key]))
-
+			/*
 			if(key == "attachments")
 				var/obj/item/weapon/gun/gun = loaded_item
 				for(var/I in 1 to gun.attachments.len)
@@ -187,7 +187,7 @@
 					attachment.Detach(null, gun, drop_attachment = FALSE)
 			else
 				loaded_item.vars[key] = list() //wipes the list on the freshly initialized object
-
+			*/
 
 			var/list/list_var_template = item_template[key]
 			if(!list_var_template.len)
@@ -199,7 +199,7 @@
 				switch(key)
 					if("contents") //we don't care about exactly recreating items anywhere but in the contents (attachments are in contents AND their own var)
 						recreate_item(reconstructed_item, loaded_item)
-
+					/*
 					if("accessories")
 						var/obj/item/clothing/accessory = locate_item(loaded_item, text2path(list_var_template[list_var_template[index]]))
 						var/obj/item/clothing/clothing = loaded_item
@@ -216,19 +216,19 @@
 						var/obj/item/storage/belt/gun/belt = loaded_item
 						belt.vars[key] += holstered
 						belt.holster_slots["1"]["gun"] = holstered
-
+					*/
 					else
 						if(text2path(list_var_template[list_var_template[index]]))
 							loaded_item.vars[key] += locate_item(loaded_item, text2path(list_var_template[list_var_template[index]]))
 							continue
 						loaded_item.vars[key] = list_var_template[list_var_template[index]]
-
+		/*
 		else if(key == "current_mag")
 			if(isnull(item_template[key]) || !(loaded_item.vars[key] = locate_item(loaded_item, text2path(item_template[key]))))
 				loaded_item.vars[key] = null
 			var/obj/item/weapon/gun/gun = loaded_item
 			gun.replace_ammo(null, gun.current_mag)
-
+		*/
 
 		else if(key == "stored_item")
 			if(!(loaded_item.vars[key] = locate_item(loaded_item, text2path(item_template[key]))))

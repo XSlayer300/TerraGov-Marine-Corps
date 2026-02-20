@@ -1,58 +1,30 @@
-@use 'sass:color';
-@use 'sass:meta';
+// CMPVE-Extraction
+.theme-generic:root {
+  // Base colors
+  --color-base: #484455;
+  --color-primary: #4f56a5;
+  --border-color: #7b86ff;
 
-$generic: #484455;
-$accent: #4f56a5;
-$border-color: #7b86ff;
+  // Background (scaled -45% lightness from generic)
+  --background-color: hsl(256, 11%, 15%);
+  --base-gradient-spread: 0;
+  --border-radius-unit: 2;
 
-@use '../colors.scss' with (
-  $fg-map-keys: (),
-  $bg-map-keys: (),
-  $primary: $accent
-);
-@use '../base.scss' with (
-  $color-bg: color.scale($generic, $lightness: -45%),
-  $border-radius: 2px
-);
+  // Button
+  --button-color: var(--color-white);
+  --button-background-default: var(--color-primary);
+  --button-transparent-text: rgba(227, 240, 255, 0.75);
 
-.theme-generic {
-  // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': $accent,
-      'color-transparent-text': rgba(227, 240, 255, 0.75)
-    )
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: (
-      'color-default-fill': $accent,
-      'background-color': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css('../components/Section.scss');
+  // Progress bar
+  --progress-bar-background: rgba(0, 0, 0, 0.5);
+  --progress-bar-fill: var(--color-primary);
 
-  @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': $border-color)
-  );
-  @include meta.load-css(
-    '../components/TextArea.scss',
-    $with: ('border-color': $border-color)
-  );
-  @include meta.load-css(
-    '../components/NumberInput.scss',
-    $with: ('border-color': $border-color)
-  );
+  // Inputs
+  --input-border-color: var(--border-color);
+  --input-background: transparent;
 
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($generic, $lightness: -25%))
-  );
+  // Title bar (scaled -25% lightness from generic)
+  --titlebar-background: hsl(256, 11%, 22%);
 
   .Layout__content {
     background-image: none;
